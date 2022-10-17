@@ -141,14 +141,18 @@ class Game:
         
         def set_wump_room(self):
                 wump = 0
-                while True:
-                        wump = random.randint(1, 20)
 
-                        if wump == self.player_location:
-                                continue
+                if self.player_location == -1:
+                        while True:
+                                wump = random.randint(1, 20)
 
-                        else:
-                                break
+                                if wump == self.player_location:
+                                        continue
+
+                                else:
+                                        break
+                else:
+                        wump = random.choice(self.cave[self.threats['wump']])
                 self.threats["wump"] = wump
         
         def set_player_spawn(self):
@@ -319,6 +323,7 @@ class Game:
                         self.game_over = False
                         self.wump_dead = False
                         self.threats = {}
+                        self.player_location = -1
 
                         Game.set_bat_rooms(self)
                         Game.set_pit_rooms(self)
